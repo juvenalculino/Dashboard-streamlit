@@ -191,7 +191,6 @@ if __name__ == '__main__':
             st.line_chart(normalizado)
 
         with col5:
-                st.header(':moneybag: :orange[RESUMO DOS VALORES]')
                 st.header(':white_check_mark: :green[TOTAL INVESTIDO]')
                 st.write(f"R${dados_csv['Valor Total'].sum():.2f}")
 
