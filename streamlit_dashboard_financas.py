@@ -147,7 +147,7 @@ def mostrar_grafico(dados_ticker, dados_qtd):
     fig = go.Figure(data=go.Pie(labels=dados_ticker, values=dados_qtd, hole=0.5))
     fig.update_layout(
         legend=dict(x=0.75, y=0.5, traceorder="normal", font=dict(family="sans-serif", size=13, color="black")),
-        margin=dict(t=30)
+        margin=dict(t=80)
     )
     return st.plotly_chart(fig)
 
@@ -170,10 +170,10 @@ if __name__ == '__main__':
         st.header(":chart_with_upwards_trend: MEUS :blue[INVESTIMENTOS]")
         st.markdown('#')
         st.dataframe(dados_csv, use_container_width=True)
-
+#.st-emotion-cache-5rimss > p
     st.divider()
-    st.markdown(""" <style> .st-emotion-cache-5rimss.e1nzilvr5 {
-    color: red; background-color:white;} 
+    st.markdown(""" <style> #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi5 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi4 > div:nth-child(1) > div > div:nth-child(5) > div.st-emotion-cache-j5r0tf.e1f1d6gn1 > div:nth-child(1) > div { 
+    color: black; background-color:white;} 
     </style> """, unsafe_allow_html=True)
     col3, col4, col5 = st.columns([0.3, 0.5, 0.2])
 
@@ -183,7 +183,11 @@ if __name__ == '__main__':
             st.header(':moneybag: :orange[VALOR ATUAL]')
             novo_df = obter_dados_acoes(dados_csv, DATA_ATUAL, DATA_ATUAL)
             st.write(novo_df)
-
+            #fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 5, 6])])
+            #fig.update_xaxes(range=[0, 7])
+            #fig.update_yaxes(range=[0, 5])
+            #st.plotly_chart(fig)
+        
         with col4:
             st.header(':bar_chart: :blue[RENDIMENTO PERÍODO 5 ANOS]')
             acao = dados_csv['Ticker'].unique().tolist()
