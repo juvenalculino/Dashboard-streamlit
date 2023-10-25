@@ -147,7 +147,7 @@ def mostrar_grafico(dados_ticker, dados_qtd):
     fig = go.Figure(data=go.Pie(labels=dados_ticker, values=dados_qtd, hole=0.5))
     fig.update_layout(
         legend=dict(x=0.75, y=0.5, traceorder="normal", font=dict(family="sans-serif", size=13, color="black")),
-        margin=dict(t=40)
+        margin=dict(t=30)
     )
     return st.plotly_chart(fig)
 
@@ -183,11 +183,7 @@ if __name__ == '__main__':
             st.header(':moneybag: :orange[VALOR ATUAL]')
             novo_df = obter_dados_acoes(dados_csv, DATA_ATUAL, DATA_ATUAL)
             st.write(novo_df)
-            #fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 5, 6])])
-            #fig.update_xaxes(range=[0, 7])
-            #fig.update_yaxes(range=[0, 5])
-            #st.plotly_chart(fig)
-        
+
         with col4:
             st.header(':bar_chart: :blue[RENDIMENTO PERÍODO 5 ANOS]')
             acao = dados_csv['Ticker'].unique().tolist()
