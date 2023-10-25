@@ -183,11 +183,6 @@ if __name__ == '__main__':
             st.header(':moneybag: :orange[VALOR ATUAL]')
             novo_df = obter_dados_acoes(dados_csv, DATA_ATUAL, DATA_ATUAL)
             st.write(novo_df)
-            #fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 5, 6])])
-            #fig.update_xaxes(range=[0, 7])
-            #fig.update_yaxes(range=[0, 5])
-            #st.plotly_chart(fig)
-        
         with col4:
             st.header(':bar_chart: :blue[RENDIMENTO PERÍODO 5 ANOS]')
             acao = dados_csv['Ticker'].unique().tolist()
