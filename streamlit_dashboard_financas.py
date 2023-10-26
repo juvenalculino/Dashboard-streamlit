@@ -180,14 +180,15 @@ if __name__ == '__main__':
     with st.spinner('CARREGANDO...'):
         
         with col3:
-            st.header(':moneybag: :orange[VALOR ATUAL]')
+            
             novo_df = obter_dados_acoes(dados_csv, DATA_ATUAL, DATA_ATUAL)
+            st.header(':moneybag: :orange[VALOR ATUAL]')
             st.write(novo_df)
         with col4:
-            st.header(':bar_chart: :blue[RENDIMENTO PERÍODO 5 ANOS]')
             acao = dados_csv['Ticker'].unique().tolist()
             dados_ac = pdr.get_data_yahoo(acao, DATA_INICIAL, DATA_ATUAL)['Adj Close']
             normalizado = dados_ac / dados_ac.iloc[0]
+            st.header(':bar_chart: :blue[RENDIMENTO PERÍODO 5 ANOS]')
             st.line_chart(normalizado)
 
         with col5:
