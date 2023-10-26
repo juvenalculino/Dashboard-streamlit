@@ -191,21 +191,16 @@ if __name__ == '__main__':
             st.line_chart(normalizado)
 
         with col5:
-                st.header(':white_check_mark: :green[TOTAL INVESTIDO]')
-                st.write(f"R${dados_csv['Valor Total'].sum():.2f}")
-
-                st.header(':white_check_mark: :green[VALOR ATUAL]')
-                st.write(f"R${novo_df['Preco Total'].sum():.2f}")
-                # Exibe o retorno
-                st.header(':white_check_mark: :green[RETORNO DIA]')
+                st.header(':flag-br: :green[GANHO/PERCA]')
+                st.metric(label=":white_check_mark: :green[TOTAL INVESTIDO]", value=f"R${dados_csv['Valor Total'].sum():.2f}")
+                st.metric(label=":white_check_mark: :green[VALOR ATUAL]", value=f"R${novo_df['Preco Total'].sum():.2f}")             
                 
                 retorno = dados_csv['Valor Total'].sum() - novo_df['Preco Total'].sum()
+                
                 if retorno < 0:
-                    st.write(f"R$-{retorno:.2f}")
+                    st.metric(label=":white_check_mark: :green[RETORNO DIA]", value=f"R$-{retorno:.2f}")
                 else:
-                    st.write(f"R$-{retorno:.2f}")
-
-            
+                    st.metric(label=":white_check_mark: :green[RETORNO DIA]", value=f"R$-{retorno:.2f}")
         
         # Data atual ou final
         #atual = datetime.now()
@@ -229,4 +224,4 @@ if __name__ == '__main__':
         #fig.update_xaxes(range=[0, 7])
         #fig.update_yaxes(range=[0, 5])
         #st.plotly_chart(fig)
-        
+
