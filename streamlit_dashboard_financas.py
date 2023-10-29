@@ -6,6 +6,7 @@ import yfinance as yf
 from datetime import datetime, timedelta, date
 from workalendar.america import Brazil
 
+
 yf.pdr_override()
 st.set_page_config(
     page_title='Dashboard',
@@ -16,17 +17,10 @@ st.set_page_config(
 
 cal = Brazil()
 
-
-
 CSV_FILE = 'registro.csv'
 DATA_ATUAL = datetime.today()
 DATA_INICIAL = DATA_ATUAL - timedelta(days=5 * 365)
 DATA_ANTERIOR = date.today() - timedelta(days=1)
-
-
-
-
-
 
 
 @st.cache_data
@@ -54,6 +48,7 @@ def mostrar_registros():
         if st.button(f"Remover {index}", key=f"remover_{index}"):
             existing_df = existing_df.drop(index)
             existing_df.to_csv(CSV_FILE, index=False)
+
 
 def menu_sidebar():
     st.title("Formulário de Registro")
@@ -89,8 +84,7 @@ def menu_sidebar():
 
 
 def obter_preco_acao(acao):
-    try:
-        
+    try:       
         acao_info = pdr.get_data_yahoo(acao, DATA_INICIAL, DATA_ATUAL)
         preco_atual = acao_info['Adj Close'].iloc[-1]
         
@@ -98,7 +92,8 @@ def obter_preco_acao(acao):
     except Exception as e:
         st.error(e)
         return None
-    
+
+
 def obter_dados_acoes(dados, data_inicial=None, data_final=None):
     acoes = dados['Ticker'].unique().tolist()
 
@@ -152,15 +147,13 @@ def mostrar_grafico(dados_ticker, dados_qtd):
     return st.plotly_chart(fig)
 
 
-
 if __name__ == '__main__':
-    # Pegando os dados
-    
-    
+
     dados_csv = carregar_dados(CSV_FILE)
     
     with st.sidebar:
       menu_sidebar()
+
     col1, col2 = st.columns([0.5, 0.5])
 
     with col1:
@@ -184,6 +177,7 @@ if __name__ == '__main__':
             novo_df = obter_dados_acoes(dados_csv, DATA_ATUAL, DATA_ATUAL)
             st.header(':moneybag: :orange[VALOR ATUAL]')
             st.write(novo_df)
+
         with col4:
             acao = dados_csv['Ticker'].unique().tolist()
             dados_ac = pdr.get_data_yahoo(acao, DATA_INICIAL, DATA_ATUAL)['Adj Close']
@@ -192,9 +186,11 @@ if __name__ == '__main__':
             st.line_chart(normalizado)
 
         with col5:
+                vendas = dados_csv[dados_csv['Operacao'] == "VENDA"].sum()['Valor Total']
+            
                 st.header(':flag-br: :green[GANHO/PERCA]')
-                st.metric(label=":white_check_mark: :green[TOTAL INVESTIDO]", value=f"R${dados_csv['Valor Total'].sum():.2f}")
-                st.metric(label=":white_check_mark: :green[VALOR ATUAL]", value=f"R${novo_df['Preco Total'].sum():.2f}")             
+                st.metric(label=":white_check_mark: :green[TOTAL INVESTIDO]", value=f"R${dados_csv['Valor Total'].sum() - vendas:.2f}")
+                st.metric(label=":white_check_mark: :green[VALOR ATUAL]", value=f"R${novo_df['Preco Total'].sum() - vendas:.2f}")             
                 
                 retorno = dados_csv['Valor Total'].sum() - novo_df['Preco Total'].sum()
                 
@@ -202,27 +198,3 @@ if __name__ == '__main__':
                     st.metric(label=":white_check_mark: :green[RETORNO DIA]", value=f"R$-{retorno:.2f}")
                 else:
                     st.metric(label=":white_check_mark: :green[RETORNO DIA]", value=f"R$-{retorno:.2f}")
-        
-        # Data atual ou final
-        #atual = datetime.now()
-
-        # Data inicial
-        #inicio = dt.date(atual.year - 5, atual.month, atual.day)
-
-        # Obter os dados do Yahoo Finance
-        #dados_acoes = pdr.get_data_yahoo(acao, inicio, atual)['Adj Close']
-
-        # Normalizar os dados
-        #normalizado = dados_acoes / dados_acoes.iloc[0]
-
-
-
-        #dados_a = obter_dados_acoes(dados_csv, DATA_INICIAL, DATA_ATUAL)
-        #normalizado = dados_a / dados_a.iloc[0]
-
-        #st.line_chart(normalizado)
-        #fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 5, 6])])
-        #fig.update_xaxes(range=[0, 7])
-        #fig.update_yaxes(range=[0, 5])
-        #st.plotly_chart(fig)
-
